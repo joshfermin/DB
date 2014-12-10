@@ -91,20 +91,19 @@ CREATE TABLE orders
     customer_id INT NOT NULL,
     delivered_by_employee_id INT NOT NULL,
     vehicle_id INT NOT NULL,
-    pizza_id INT NOT NULL,
     total_order_price DECIMAL(2,2) NOT NULL,
     PRIMARY KEY (order_id),
     FOREIGN KEY (customer_id) REFERENCES addresses(customer_id),
     FOREIGN KEY (delivered_by_employee_id) REFERENCES employees(employee_id),
     FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id),
-    FOREIGN KEY (pizza_id) REFERENCES pizzas_ordered(pizza_type_id)
+    FOREIGN KEY (order_id) REFERENCES pizzas_ordered(order_id)
 );
 INSERT INTO	orders VALUES
-(1, 11, 1, 1, 1, '12.93'),
-(2, 14, 5, 1, 2, '10.95'),
-(3, 12, 8, 2, 4, '18.95'),
-(4, 13, 6, 3, 3, '15.25'),
-(5, 10, 7, 2, 2, '10.95');
+(1, 11, 1, 1, '12.93'),
+(2, 14, 5, 1, '10.95'),
+(3, 12, 8, 2, '18.95'),
+(4, 13, 6, 3, '15.25'),
+(5, 10, 7, 2, '10.95');
 
 
 CREATE TABLE vehicles
@@ -145,9 +144,24 @@ INSERT INTO employee_delivery_area VALUES
 
 CREATE TABLE pizzas_ordered
 (
-	pizza_type_id INT NOT NULL,
-	pizza_name VARCHAR(20)ps
-)
+	order_id INT NOT NULL,
+    pizza_id INT NOT NULL,
+    total_pizza_price DECIMAL(2,2) NOT NULL,
+    PRIMARY KEY (order_id),
+    FOREIGN KEY (pizza_id) REFERENCES ref_base_types(pizza_id)
+);
+INSERT INTO pizzas_ordered
+
+
+
+
+
+CREATE TABLE pizza_details
+(
+    pizza_id INT NOT NULL,
+    pizza_description TEXT,
+    PRIMARY KEY (pizza_id)
+);
 
 
 
