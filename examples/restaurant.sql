@@ -1,9 +1,9 @@
 -- create the database
-DROP DATABASE IF EXISTS restuaruant;
-CREATE DATABASE restaurant;
+DROP DATABASE IF EXISTS pizzahut;
+CREATE DATABASE pizzahut;
 
 -- select the database
-USE restaurant;
+USE pizzahut;
 
 -- creating tables:
 CREATE TABLE customers
@@ -33,8 +33,8 @@ CREATE TABLE ref_payment_methods
     PRIMARY KEY (payment_method_code)
 );
 INSERT INTO ref_payment_methods VALUES
-(1 , 'CREDIT')
-(2 , 'DEBIT')
+(1 , 'CREDIT'),
+(2 , 'DEBIT'),
 (3 , 'CASH');
 
 CREATE TABLE addresses
@@ -46,7 +46,7 @@ CREATE TABLE addresses
     state VARCHAR(20),
     PRIMARY KEY (address_id)
 );
-INSERT INTO addresses
+INSERT INTO addresses VALUES
 (1, 'Boulder', '80303', 'CO'),
 (2, 'Boulder', '80304', 'CO'),
 (3, 'Boulder', '80305', 'CO'),
@@ -128,18 +128,26 @@ INSERT INTO vehicle_types VALUES
 (3, '2007 Mitsubishi Eclipse');
 
 -- MVD - table's only pk is all 3 attributes.
-CREATE TABLE pizzas_ordered
+CREATE TABLE employee_delivery_area
 (
 	delivered_by_employee VARCHAR(50),
 	pizza_type VARCHAR(20),
 	area VARCHAR(20)
-)
-INSERT INTO pizzas_ordered VALUES
+);
+INSERT INTO employee_delivery_area VALUES
 ('Alex Campbell', 'Pepperoni', 'Boulder'),
 ('Alex Campbell', 'Cheese', 'Boulder'),
 ('John Doe', 'Pepperoni', 'Broomfield'),
 ('John Doe', 'Supreme', 'Broomfield');
 
+CREATE TABLE pizzas_ordered
+(
+
+)
+
+
+
+-- loosely following:
 -- http://www.netthruoffice.com/doc/images/pizza_deliveries_dezign.gif
 
 
