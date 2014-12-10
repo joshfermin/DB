@@ -16,7 +16,7 @@ CREATE TABLE customers
     customer_phone VARCHAR(50) NOT NULL,
     PRIMARY KEY (customer_id),
     FOREIGN KEY (payment_method_code) REFERENCES ref_payment_methods(payment_method_code),
-    FOREIGN KEY (customer_address_id) REFERENCES addresses(customer_address_id)
+    FOREIGN KEY (customer_address_id) REFERENCES addresses(address_id)
 );
 INSERT INTO customers VALUES
 (10, 1, 10, 'Fred Customer', '222-111-1111'),
@@ -151,7 +151,11 @@ CREATE TABLE pizzas_ordered
     FOREIGN KEY (pizza_id) REFERENCES ref_base_types(pizza_id)
 );
 INSERT INTO pizzas_ordered VALUES
-
+(1, 2, '12.93'),
+(2, 1, '10.95'),
+(3, 4, '18.95'),
+(4, 3, '15.25'),
+(5, 1, '10.95');
 
 
 CREATE TABLE pizza_details
@@ -160,7 +164,11 @@ CREATE TABLE pizza_details
     pizza_description TEXT,
     PRIMARY KEY (pizza_id)
 );
-
+INSERT INTO pizza_details VALUES
+(1, 'Supreme'),
+(2, 'Pepperoni'),
+(3, 'Meat Lovers'),
+(4, 'Cheese');
 
 
 -- loosely following:
