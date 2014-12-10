@@ -45,6 +45,18 @@ CREATE TABLE employees
     FOREIGN KEY (employee_address_id) REFERENCES addresses(employee_address_id)
 );
 
+CREATE TABLE orders
+(
+	order_id INT NOT NULL,
+    customer_id INT NOT NULL,
+    delivered_by_employee_id INT NOT NULL,
+    vehicle_id INT NOT NULL,
+    employee_phone VARCHAR(50),
+    PRIMARY KEY (order_id),
+    FOREIGN KEY (customer_id) REFERENCES addresses(customer_id)
+    FOREIGN KEY (delivered_by_employee_id) REFERENCES employees(employee_id)
+);
+
 
 
 -- http://www.netthruoffice.com/doc/images/pizza_deliveries_dezign.gif
