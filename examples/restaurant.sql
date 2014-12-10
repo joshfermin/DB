@@ -39,15 +39,25 @@ CREATE TABLE addresses
 (
     address_id INT NOT NULL,
     city VARCHAR(20),
-    zip INT,
+    zip VARCHAR(20),
     state VARCHAR(20),
-    country VARCHAR(20),
     PRIMARY KEY (address_id)
 );
 INSERT INTO addresses
-(
-
-);
+(1, 'Boulder', '80303', 'CO'),
+(2, 'Boulder', '80304', 'CO'),
+(3, 'Boulder', '80305', 'CO'),
+(4, 'Broomfield', '80021', 'CO'),
+(5, 'Boulder', '80305', 'CO'),
+(6, 'Boulder', '80303', 'CO'),
+(7, 'Boulder', '80301', 'CO'),
+(8, 'Boulder', '80302', 'CO'),
+(9, 'Boulder', '80303', 'CO'),
+(10, 'Broomfield', '800020', 'CO'),
+(11, 'Broomfield', '800021', 'CO'),
+(12, 'Broomfield', '800020', 'CO'),
+(13, 'Broomfield', '800023', 'CO'),
+(14, 'Broomfield', '800020', 'CO');
 
 CREATE TABLE employees
 (
@@ -75,23 +85,31 @@ CREATE TABLE orders
     customer_id INT NOT NULL,
     delivered_by_employee_id INT NOT NULL,
     vehicle_id INT NOT NULL,
-    employee_phone VARCHAR(50),
+    total_order_price DECIMAL(2,2) NOT NULL,
     PRIMARY KEY (order_id),
     FOREIGN KEY (customer_id) REFERENCES addresses(customer_id),
     FOREIGN KEY (delivered_by_employee_id) REFERENCES employees(employee_id),
     FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id)
 );
-
+INSERT INTO	orders VALUES
+(1, 11, 1, 1, '12.93'),
+(2, 14, 5, 1, '25.95'),
+(3, 12, 8, 2, '18.95'),
+(4, 13, 6, 3, '5.25'),
+(5, 10, 7, 2, '99.95');
 
 
 CREATE TABLE vehicles
 (
 	vehicle_id INT NOT NULL,
-	vehicle_type_code INT NOT NULL,
-	vehicle_details TEXT,
+	vehicle_license_number VARCHAR(20),
 	PRIMARY KEY (vehicle_id),
-	FOREIGN KEY	(vehicle_type_code) REFERENCES vehicle_types(vehicle_type_code)
+	FOREIGN KEY	(vehicle_id) REFERENCES vehicle_types(vehicle_type_code)
 );
+INSERT INTO vehicles VALUES
+(1, '123-ABC'),
+(2, '456-DEF'),
+(3, '789-GHI');
 
 CREATE TABLE vehicle_types
 (
@@ -99,6 +117,9 @@ CREATE TABLE vehicle_types
 	vehicle_type_description TEXT,
 	PRIMARY KEY (vehicle_type_code)
 );
+(1, '2008 Honda Civic'),
+(2, '2011 BMW 128i'),
+(3, '2007 Mitsubishi Eclipse');
 
 
 -- http://www.netthruoffice.com/doc/images/pizza_deliveries_dezign.gif
