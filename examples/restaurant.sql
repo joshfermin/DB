@@ -8,6 +8,7 @@ USE restaurant;
 -- creating tables:
 CREATE TABLE customers
 (
+	-- FD customer_id determines address/name/phone
     customer_id INT NOT NULL,
     payment_method_code INT NOT NULL,
     customer_address_id INT NOT NULL,
@@ -26,8 +27,9 @@ INSERT INTO customers VALUES
 
 CREATE TABLE ref_payment_methods
 (
+	-- payment_method_code determines type
 	payment_method_code INT NOT NULL,
-    payment_method_description TEXT,
+    payment_method_type TEXT,
     PRIMARY KEY (payment_method_code)
 );
 INSERT INTO ref_payment_methods VALUES
@@ -37,6 +39,7 @@ INSERT INTO ref_payment_methods VALUES
 
 CREATE TABLE addresses
 (
+	-- address_id determines city, zip, state
     address_id INT NOT NULL,
     city VARCHAR(20),
     zip VARCHAR(20),
@@ -61,6 +64,7 @@ INSERT INTO addresses
 
 CREATE TABLE employees
 (
+	-- employee_id determines address, name, phone
 	employee_id INT NOT NULL,
     employee_address_id INT NOT NULL,
     employee_name VARCHAR(50),
@@ -74,13 +78,14 @@ INSERT INTO employees VALUES
 (3, 3, 'Elmer Jones', 	'111-333-3333'),
 (4, 4, 'Ralph Watson', 	'111-444-4444'),
 (5, 5, 'Paulo Locario', '111-555-5555'),
-(6, 6, 'Louis B', 		'111-666-6666'),
+(6, 6, 'Louis Bouddhou','111-666-6666'),
 (7, 7, 'Josh Fermin', 	'111-777-7777'),
 (8, 8, 'Alex Campbell', '111-888-8888'),
 (9, 9, 'Edward Zhu', 	'111-999-9999');
 
 CREATE TABLE orders
 (
+	-- order_id detmines 
 	order_id INT NOT NULL,
     customer_id INT NOT NULL,
     delivered_by_employee_id INT NOT NULL,
@@ -117,10 +122,23 @@ CREATE TABLE vehicle_types
 	vehicle_type_description TEXT,
 	PRIMARY KEY (vehicle_type_code)
 );
+INSERT INTO vehicle_types VALUES
 (1, '2008 Honda Civic'),
 (2, '2011 BMW 128i'),
 (3, '2007 Mitsubishi Eclipse');
 
+-- MVD - table's only pk is all 3 attributes.
+CREATE TABLE pizzas_ordered
+(
+	delivered_by_employee VARCHAR(50),
+	pizza_type VARCHAR(20),
+	area VARCHAR(20)
+)
+INSERT INTO pizzas_ordered VALUES
+('Alex Campbell', 'Pepperoni', 'Boulder'),
+('Alex Campbell', 'Cheese', 'Boulder'),
+('John Doe', 'Pepperoni', 'Broomfield'),
+('John Doe', 'Supreme', 'Broomfield');
 
 -- http://www.netthruoffice.com/doc/images/pizza_deliveries_dezign.gif
 
