@@ -1,5 +1,5 @@
 -- create the database
-DROP DATABASE IF EXISTS pizzahut;
+DROP DATABASE IF EXISTS pizzahut-normalized;
 CREATE DATABASE pizzahut;
 
 -- select the database

@@ -6,25 +6,6 @@ CREATE DATABASE pizzahut;
 USE pizzahut;
 
 -- creating tables:
-CREATE TABLE customers
-(
-    -- FD customer_id determines address/name/phone
-    customer_id INT NOT NULL,
-    payment_method_code INT NOT NULL,
-    customer_address_id INT NOT NULL,
-    customer_name VARCHAR(50) NOT NULL,
-    customer_phone VARCHAR(50) NOT NULL,
-    PRIMARY KEY (customer_id),
-    FOREIGN KEY (payment_method_code) REFERENCES ref_payment_methods(payment_method_code),
-    FOREIGN KEY (customer_address_id) REFERENCES addresses(address_id)
-);
-INSERT INTO customers VALUES
-(10, 1, 10, 'Fred Customer', '222-111-1111'),
-(11, 2, 11, 'Julie Jones', '222-222-2222'),
-(12, 2, 12, 'Jim Baker', '222-333-3333'),
-(13, 1, 13, 'Maria Anders', '222-444-4444'),
-(14, 3, 14, 'Ana Trujillo', '222-555-5555');
-
 CREATE TABLE ref_payment_methods
 (
     -- payment_method_code determines type
@@ -67,11 +48,10 @@ CREATE TABLE employees
 (
     -- employee_id determines address, name, phone
     employee_id INT NOT NULL,
-    employee_address_id INT NOT NULL,
+    employee_address_id INT REFERENCES addresses(employee_address_id),
     employee_name VARCHAR(50),
     employee_phone VARCHAR(50),
-    PRIMARY KEY (employee_id),
-    FOREIGN KEY (employee_address_id) REFERENCES addresses(employee_address_id)
+    PRIMARY KEY (employee_id)
 );
 INSERT INTO employees VALUES
 (1, 1, 'John Doe',      '111-111-1111'),
@@ -84,34 +64,29 @@ INSERT INTO employees VALUES
 (8, 8, 'Alex Campbell', '111-888-8888'),
 (9, 9, 'Edward Zhu',    '111-999-9999');
 
-CREATE TABLE orders
+CREATE TABLE customers
 (
-    -- order_id detmines 
-    order_id INT NOT NULL,
+    -- FD customer_id determines address/name/phone
     customer_id INT NOT NULL,
-    delivered_by_employee_id INT NOT NULL,
-    vehicle_id INT NOT NULL,
-    total_order_price DECIMAL(2,2) NOT NULL,
-    PRIMARY KEY (order_id),
-    FOREIGN KEY (customer_id) REFERENCES addresses(customer_id),
-    FOREIGN KEY (delivered_by_employee_id) REFERENCES employees(employee_id),
-    FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id),
-    FOREIGN KEY (order_id) REFERENCES pizzas_ordered(order_id)
+    payment_method_code INT REFERENCES ref_payment_methods(payment_method_code),
+    customer_address_id INT REFERENCES addresses(address_id),
+    customer_name VARCHAR(50) NOT NULL,
+    customer_phone VARCHAR(50) NOT NULL,
+    PRIMARY KEY (customer_id)
 );
-INSERT INTO orders VALUES
-(1, 11, 1, 1, '12.93'),
-(2, 14, 5, 1, '10.95'),
-(3, 12, 8, 2, '18.95'),
-(4, 13, 6, 3, '15.25'),
-(5, 10, 7, 2, '10.95');
+INSERT INTO customers VALUES
+(10, 1, 10, 'Fred Customer', '222-111-1111'),
+(11, 2, 11, 'Julie Jones', '222-222-2222'),
+(12, 2, 12, 'Jim Baker', '222-333-3333'),
+(13, 1, 13, 'Maria Anders', '222-444-4444'),
+(14, 3, 14, 'Ana Trujillo', '222-555-5555');
 
 
 CREATE TABLE vehicles
 (
-    vehicle_id INT NOT NULL,
+    vehicle_id INT REFERENCES vehicle_types(vehicle_type_code),
     vehicle_license_number VARCHAR(20),
-    PRIMARY KEY (vehicle_id),
-    FOREIGN KEY (vehicle_id) REFERENCES vehicle_types(vehicle_type_code)
+    PRIMARY KEY (vehicle_id)
 );
 INSERT INTO vehicles VALUES
 (1, '123-ABC'),
@@ -129,6 +104,24 @@ INSERT INTO vehicle_types VALUES
 (2, '2011 BMW 128i'),
 (3, '2007 Mitsubishi Eclipse');
 
+CREATE TABLE orders
+(
+    -- order_id detmines 
+    order_id INT NOT NULL REFERENCES pizzas_ordered(order_id),
+    customer_id INT NOT NULL  REFERENCES addresses(customer_id),
+    delivered_by_employee_id INT NOT NULL REFERENCES employees(employee_id),
+    vehicle_id INT NOT NULL REFERENCES vehicles(vehicle_id),
+    total_order_price DECIMAL(2,2) NOT NULL,
+    PRIMARY KEY (order_id)
+);
+INSERT INTO orders VALUES
+(1, 11, 1, 1, '12.93'),
+(2, 14, 5, 1, '10.95'),
+(3, 12, 8, 2, '18.95'),
+(4, 13, 6, 3, '15.25'),
+(5, 10, 7, 2, '10.95');
+
+
 -- MVD - table's only pk is all 3 attributes.
 CREATE TABLE employee_delivery_area
 (
@@ -145,10 +138,9 @@ INSERT INTO employee_delivery_area VALUES
 CREATE TABLE pizzas_ordered
 (
     order_id INT NOT NULL,
-    pizza_id INT NOT NULL,
+    pizza_id INT NOT NULL REFERENCES ref_base_types(pizza_id),
     total_pizza_price DECIMAL(2,2) NOT NULL,
-    PRIMARY KEY (order_id),
-    FOREIGN KEY (pizza_id) REFERENCES ref_base_types(pizza_id)
+    PRIMARY KEY (order_id)
 );
 INSERT INTO pizzas_ordered VALUES
 (1, 2, '12.93'),
