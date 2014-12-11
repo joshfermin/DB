@@ -6,6 +6,23 @@ CREATE DATABASE pizzahut;
 USE pizzahut;
 
 -- creating tables:
+CREATE TABLE customers
+(
+    -- FD customer_id determines address/name/phone
+    customer_id INT NOT NULL,
+    payment_method_code INT REFERENCES ref_payment_methods(payment_method_code),
+    customer_address_id INT REFERENCES addresses(address_id),
+    customer_name VARCHAR(50) NOT NULL,
+    customer_phone VARCHAR(50) NOT NULL,
+    PRIMARY KEY (customer_id)
+);
+INSERT INTO customers VALUES
+(10, 1, 10, 'Fred Customer', '222-111-1111'),
+(11, 2, 11, 'Julie Jones', '222-222-2222'),
+(12, 2, 12, 'Jim Baker', '222-333-3333'),
+(13, 1, 13, 'Maria Anders', '222-444-4444'),
+(14, 3, 14, 'Ana Trujillo', '222-555-5555');
+
 CREATE TABLE ref_payment_methods
 (
     -- payment_method_code determines type
@@ -38,11 +55,11 @@ INSERT INTO addresses VALUES
 (7, 'Boulder', '80301', 'CO'),
 (8, 'Boulder', '80302', 'CO'),
 (9, 'Boulder', '80303', 'CO'),
-(10, 'Broomfield', '800020', 'CO'),
-(11, 'Broomfield', '800021', 'CO'),
-(12, 'Broomfield', '800020', 'CO'),
-(13, 'Broomfield', '800023', 'CO'),
-(14, 'Broomfield', '800020', 'CO');
+(10, 'Broomfield', '80020', 'CO'),
+(11, 'Broomfield', '80021', 'CO'),
+(12, 'Broomfield', '80020', 'CO'),
+(13, 'Broomfield', '80023', 'CO'),
+(14, 'Broomfield', '80020', 'CO');
 
 CREATE TABLE employees
 (
@@ -63,24 +80,6 @@ INSERT INTO employees VALUES
 (7, 7, 'Josh Fermin',   '111-777-7777'),
 (8, 8, 'Alex Campbell', '111-888-8888'),
 (9, 9, 'Edward Zhu',    '111-999-9999');
-
-CREATE TABLE customers
-(
-    -- FD customer_id determines address/name/phone
-    customer_id INT NOT NULL,
-    payment_method_code INT REFERENCES ref_payment_methods(payment_method_code),
-    customer_address_id INT REFERENCES addresses(address_id),
-    customer_name VARCHAR(50) NOT NULL,
-    customer_phone VARCHAR(50) NOT NULL,
-    PRIMARY KEY (customer_id)
-);
-INSERT INTO customers VALUES
-(10, 1, 10, 'Fred Customer', '222-111-1111'),
-(11, 2, 11, 'Julie Jones', '222-222-2222'),
-(12, 2, 12, 'Jim Baker', '222-333-3333'),
-(13, 1, 13, 'Maria Anders', '222-444-4444'),
-(14, 3, 14, 'Ana Trujillo', '222-555-5555');
-
 
 CREATE TABLE vehicles
 (
