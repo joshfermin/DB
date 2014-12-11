@@ -1,9 +1,9 @@
 -- create the database
-DROP DATABASE IF EXISTS pizzahut;
-CREATE DATABASE pizzahut;
+DROP DATABASE IF EXISTS pizzahut_normalized;
+CREATE DATABASE pizzahut_normalized;
 
 -- select the database
-USE pizzahut;
+USE pizzahut_normalized;
 
 -- creating tables:
 
@@ -24,6 +24,7 @@ INSERT INTO customers VALUES
 (13, 1, 13, 'Maria Anders', '222-444-4444'),
 (14, 3, 14, 'Ana Trujillo', '222-555-5555');
 
+
 CREATE TABLE ref_payment_methods
 (
     -- payment_method_code determines type
@@ -31,7 +32,6 @@ CREATE TABLE ref_payment_methods
     payment_method_type TEXT,
     PRIMARY KEY (payment_method_code)
 );
-
 INSERT INTO ref_payment_methods VALUES
 (1 , 'CREDIT'),
 (2 , 'DEBIT'),
@@ -45,7 +45,7 @@ CREATE TABLE address_cityzip
     zip VARCHAR(20) REFERENCES address_zipstate(zip),
     PRIMARY KEY (address_id)
 );
-INSERT INTO addresses VALUES
+INSERT INTO address_cityzip VALUES
 (1, 'Boulder', '80303'),
 (2, 'Boulder', '80304'),
 (3, 'Boulder', '80305'),
@@ -62,12 +62,11 @@ INSERT INTO addresses VALUES
 (14, 'Broomfield', '80020');
 
 CREATE TABLE address_zipstate
-
 (
     -- zip determines state
     zip VARCHAR(20),
     state VARCHAR(20),
-    PRIMARY KEY (address_id)
+    PRIMARY KEY (zip)
 );
 INSERT INTO address_zipstate VALUES
 ('80301', 'CO'),
@@ -93,7 +92,7 @@ INSERT INTO employees VALUES
 (2, 2, 'Cindy Smith',   '111-222-2222'),
 (3, 3, 'Elmer Jones',   '111-333-3333'),
 (4, 4, 'Ralph Watson',  '111-444-4444'),
-(5, 5, 'Paulo Locario', '111-555-5555'),
+(5, 5, 'Sheefali Tewari', '111-555-5555'),
 (6, 6, 'Louis Bouddhou','111-666-6666'),
 (7, 7, 'Josh Fermin',   '111-777-7777'),
 (8, 8, 'Alex Campbell', '111-888-8888'),
@@ -141,17 +140,26 @@ INSERT INTO orders VALUES
 
 
 -- MVD - table's only pk is all 3 attributes.
+CREATE TABLE employee_delivery_type
+(
+    delivered_by_employee_id VARCHAR(50),
+    pizza_type VARCHAR(20)
+);
+INSERT INTO employee_delivery_type VALUES
+('Alex Campbell', 'Pepperoni'),
+('Alex Campbell', 'Cheese'),
+('John Doe', 'Pepperoni'),
+('John Doe', 'Supreme');
+
 CREATE TABLE employee_delivery_area
 (
-    delivered_by_employee VARCHAR(50),
-    pizza_type VARCHAR(20),
+    delivered_by_employee_id VARCHAR(50),
     area VARCHAR(20)
 );
 INSERT INTO employee_delivery_area VALUES
-('Alex Campbell', 'Pepperoni', 'Boulder'),
-('Alex Campbell', 'Cheese', 'Boulder'),
-('John Doe', 'Pepperoni', 'Broomfield'),
-('John Doe', 'Supreme', 'Broomfield');
+('Alex Campbell', 'Boulder'),
+('John Doe', 'Broomfield');
+
 
 CREATE TABLE pizzas_ordered
 (
@@ -167,7 +175,6 @@ INSERT INTO pizzas_ordered VALUES
 (4, 3, '15.25'),
 (5, 1, '10.95');
 
-
 CREATE TABLE pizza_details
 (
     pizza_id INT NOT NULL,
@@ -179,7 +186,6 @@ INSERT INTO pizza_details VALUES
 (2, 'Pepperoni'),
 (3, 'Meat Lovers'),
 (4, 'Cheese');
-
 
 -- loosely following:
 -- http://www.netthruoffice.com/doc/images/pizza_deliveries_dezign.gif

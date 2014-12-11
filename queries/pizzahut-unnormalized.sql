@@ -9,32 +9,21 @@ USE pizzahut;
 CREATE TABLE customers
 (
     -- FD customer_id determines address/name/phone
+    -- method code determines method type
     customer_id INT NOT NULL,
-    payment_method_code INT REFERENCES ref_payment_methods(payment_method_code),
+    payment_method_code INT,
     customer_address_id INT REFERENCES addresses(address_id),
+    payment_method_type TEXT,
     customer_name VARCHAR(50) NOT NULL,
     customer_phone VARCHAR(50) NOT NULL,
     PRIMARY KEY (customer_id)
 );
 INSERT INTO customers VALUES
-(10, 1, 10, 'Fred Customer', '222-111-1111'),
-(11, 2, 11, 'Julie Jones', '222-222-2222'),
-(12, 2, 12, 'Jim Baker', '222-333-3333'),
-(13, 1, 13, 'Maria Anders', '222-444-4444'),
-(14, 3, 14, 'Ana Trujillo', '222-555-5555');
-
-CREATE TABLE ref_payment_methods
-(
-    -- payment_method_code determines type
-    payment_method_code INT NOT NULL,
-    payment_method_type TEXT,
-    PRIMARY KEY (payment_method_code)
-);
-
-INSERT INTO ref_payment_methods VALUES
-(1 , 'CREDIT'),
-(2 , 'DEBIT'),
-(3 , 'CASH');
+(10, 1, 10, 'CREDIT',  'Fred Customer', '222-111-1111'),
+(11, 2, 11, 'DEBIT', 'Julie Jones', '222-222-2222'),
+(12, 2, 12, 'DEBIT', 'Jim Baker', '222-333-3333'),
+(13, 1, 13, 'CREDIT', 'Maria Anders', '222-444-4444'),
+(14, 3, 14, 'CASH', 'Ana Trujillo', '222-555-5555');
 
 CREATE TABLE addresses
 (
@@ -75,7 +64,7 @@ INSERT INTO employees VALUES
 (2, 2, 'Cindy Smith',   '111-222-2222'),
 (3, 3, 'Elmer Jones',   '111-333-3333'),
 (4, 4, 'Ralph Watson',  '111-444-4444'),
-(5, 5, 'Paulo Locario', '111-555-5555'),
+(5, 5, 'Sheefali Tewari', '111-555-5555'),
 (6, 6, 'Louis Bouddhou','111-666-6666'),
 (7, 7, 'Josh Fermin',   '111-777-7777'),
 (8, 8, 'Alex Campbell', '111-888-8888'),
@@ -83,25 +72,15 @@ INSERT INTO employees VALUES
 
 CREATE TABLE vehicles
 (
-    vehicle_id INT REFERENCES vehicle_types(vehicle_type_code),
+    vehicle_id INT,
     vehicle_license_number VARCHAR(20),
+    vehicle_type_description TEXT,
     PRIMARY KEY (vehicle_id)
 );
 INSERT INTO vehicles VALUES
-(1, '123-ABC'),
-(2, '456-DEF'),
-(3, '789-GHI');
-
-CREATE TABLE vehicle_types
-(
-    vehicle_type_code INT NOT NULL,
-    vehicle_type_description TEXT,
-    PRIMARY KEY (vehicle_type_code)
-);
-INSERT INTO vehicle_types VALUES
-(1, '2008 Honda Civic'),
-(2, '2011 BMW 128i'),
-(3, '2007 Mitsubishi Eclipse');
+(1, '123-ABC', '2008 Honda Civic'),
+(2, '456-DEF', '2011 BMW 128i'),
+(3, '789-GHI', '2007 Mitsubishi Eclipse');
 
 CREATE TABLE orders
 (
@@ -138,28 +117,16 @@ CREATE TABLE pizzas_ordered
 (
     order_id INT NOT NULL,
     pizza_id INT NOT NULL REFERENCES ref_base_types(pizza_id),
+    pizza_description TEXT,
     total_pizza_price DECIMAL(2,2) NOT NULL,
     PRIMARY KEY (order_id)
 );
 INSERT INTO pizzas_ordered VALUES
-(1, 2, '12.93'),
-(2, 1, '10.95'),
-(3, 4, '18.95'),
-(4, 3, '15.25'),
-(5, 1, '10.95');
-
-
-CREATE TABLE pizza_details
-(
-    pizza_id INT NOT NULL,
-    pizza_description TEXT,
-    PRIMARY KEY (pizza_id)
-);
-INSERT INTO pizza_details VALUES
-(1, 'Supreme'),
-(2, 'Pepperoni'),
-(3, 'Meat Lovers'),
-(4, 'Cheese');
+(1, 2, '12.93', 'Pepperoni'),
+(2, 1, '10.95', 'Supreme'),
+(3, 4, '18.95', 'Cheese'),
+(4, 3, '15.25', 'Meat Lovers'),
+(5, 1, '10.95', 'Supreme');
 
 
 -- loosely following:
