@@ -44,6 +44,30 @@ GROUP BY
 	customers.customer_id
 HAVING COUNT(orders.order_id) > 2
 
-# 7 - SELECT FROM WHERE GROUP BY 
+
+# 7 - SELECT FROM WHERE with two implied JOINS, a MAX function, AVG function
+
+
+# 8 - SELECT FROM WHERE NOT and IN
+
+
+# 9 - SET COMMAND and WHERE (nontrivial)
+
+
+# 10 - UPDATE with WHERE (nontrivial)
+
+
+# 11 - CREATE USER
+CREATE USER joshfermin@localhost IDENTIFIED BY 'password';
+GRANT ALL ON project.* TO joshfermin@localhost;
+
+# 12 - DROP USER
+DROP USER joshfermin@localhost;
+
+# 13 - START TRANSACTION and a ROLLBACK
+
+
+
+
 
 
