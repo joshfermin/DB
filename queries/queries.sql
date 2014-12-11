@@ -18,12 +18,19 @@ WHERE
 	address_cityzip.zip = address_zipstate.zip;
 
 # 5 - SELECT FROM WHERE GROUP BY
--- SELECT Shippers.ShipperName,COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders
--- LEFT JOIN Shippers
--- ON Orders.ShipperID=Shippers.ShipperID
--- GROUP BY ShipperName;
+SELECT 
+	COUNT(orders.order_id) AS NumberOFOrders,
+	customers.customer_id,
+	customers.customer_name
+FROM 
+	`orders`, `customers`
+WHERE 
+	orders.customer_id = customers.customer_id
+GROUP BY 
+	customers.customer_name
 
-SELECT
+# 6 - SELECT FROM WHERE GROUP BY HAVING
+
 	
 
 

@@ -124,19 +124,35 @@ INSERT INTO vehicle_types VALUES
 CREATE TABLE orders
 (
     -- order_id detmines 
-    order_id INT NOT NULL REFERENCES pizzas_ordered(order_id),
+    order_id INT NOT NULL,
     customer_id INT NOT NULL  REFERENCES addresses(customer_id),
     delivered_by_employee_id INT NOT NULL REFERENCES employees(employee_id),
     vehicle_id INT NOT NULL REFERENCES vehicles(vehicle_id),
-    total_order_price DECIMAL(2,2) NOT NULL,
+    pizza_id INT NOT NULL REFERENCES pizzas_ordered(pizza_id),
+    total_order_price DECIMAL(4,2) NOT NULL,
     PRIMARY KEY (order_id)
 );
 INSERT INTO orders VALUES
-(1, 11, 1, 1, '12.93'),
-(2, 14, 5, 1, '10.95'),
-(3, 12, 8, 2, '18.95'),
-(4, 13, 6, 3, '15.25'),
-(5, 10, 7, 2, '10.95');
+(1, 11, 1,  1, 1, '12.93'),
+(2, 14, 5,  1, 2, '10.95'),
+(3, 12, 8,  2, 3, '18.95'),
+(4, 13, 6,  3, 4, '15.25'),
+(5, 10, 7,  2, 2, '10.95'),
+(6, 11, 5,  1, 2, '10.95'),
+(7, 11, 1,  1, 1, '12.93'),
+(8, 12, 5,  2, 4, '15.25'),
+(9, 12, 5,  2, 1, '12.93'),
+(10, 11, 1, 1, 1, '12.93'),
+(11, 11, 6, 2, 3, '18.95'),
+(12, 14, 5, 1, 1, '12.93'),
+(13, 14, 3, 2, 1, '12.93'),
+(14, 12, 2, 1, 2, '10.95'),
+(15, 12, 7, 1, 1, '12.93'),
+(16, 13, 1, 3, 1, '12.93'),
+(17, 10, 1, 1, 3, '18.95'),
+(18, 11, 1, 1, 1, '12.93'),
+(19, 11, 1, 1, 1, '12.93'),
+(20, 11, 1, 1, 1, '12.93');
 
 
 -- MVD - table's only pk is all 3 attributes.
@@ -163,17 +179,15 @@ INSERT INTO employee_delivery_area VALUES
 
 CREATE TABLE pizzas_ordered
 (
-    order_id INT NOT NULL,
-    pizza_id INT NOT NULL REFERENCES ref_base_types(pizza_id),
-    total_pizza_price DECIMAL(2,2) NOT NULL,
-    PRIMARY KEY (order_id)
+    pizza_id INT NOT NULL REFERENCES pizza_details(pizza_id),
+    total_pizza_price DECIMAL(4,2) NOT NULL,
+    PRIMARY KEY (pizza_id)
 );
 INSERT INTO pizzas_ordered VALUES
-(1, 2, '12.93'),
-(2, 1, '10.95'),
-(3, 4, '18.95'),
-(4, 3, '15.25'),
-(5, 1, '10.95');
+(1, '12.93'),
+(2, '10.95'),
+(3, '18.95'),
+(4, '15.25');
 
 CREATE TABLE pizza_details
 (

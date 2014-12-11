@@ -155,7 +155,7 @@ CREATE TABLE orders
 (
     -- order_id detmines 
     order_id INT NOT NULL REFERENCES pizzas_ordered(order_id),
-    customer_id INT NOT NULL  REFERENCES addresses(customer_id),
+    customer_id INT NOT NULL REFERENCES addresses(customer_id),
     delivered_by_employee_id INT NOT NULL REFERENCES employees(employee_id),
     vehicle_id INT NOT NULL REFERENCES vehicles(vehicle_id),
     total_order_price DECIMAL(2,2) NOT NULL,
