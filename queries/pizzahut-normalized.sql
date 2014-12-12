@@ -39,7 +39,6 @@ CREATE TABLE address_cityzip
 (
 	-- address_id determines city, zip, state
 	-- city determines zip
-	-- 
 	address_id INT NOT NULL,
 	city VARCHAR(20),
 	zip VARCHAR(20) REFERENCES address_zipstate(zip),

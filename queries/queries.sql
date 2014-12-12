@@ -46,7 +46,13 @@ HAVING COUNT(orders.order_id) > 2
 
 
 # 7 - SELECT FROM WHERE with two implied JOINS, a MAX function, AVG function
-SELECT 
+# gives 
+SELECT MAX(AVG), CustName
+FROM (SELECT AVG(orders.total_order_price) AS AVG, customers.customer_name AS CustName
+	FROM `orders`, `customers`, `address_cityzip`
+	WHERE (orders.customer_id = customers.customer_id) AND (customers.customer_address_id = address_cityzip.address_id)
+	GROUP BY customers.customer_id) AS A
+
 
 # 8 - SELECT FROM WHERE NOT and IN
 # Gives customers that dont pay in cash.
@@ -58,11 +64,10 @@ WHERE customer_name NOT IN (
 	WHERE payment_method_code = 1
 );
 
-# 9 - SET COMMAND and WHERE (nontrivial)
-
-
-# 10 - UPDATE with WHERE (nontrivial)
-
+# 9 - SET COMMAND and WHERE (nontrivial) 10 - UPDATE with WHERE (nontrivial)
+UPDATE pizzas_ordered
+SET total_pizza_price='15.95'
+WHERE total_pizza_price > '16.00'
 
 # 11 - CREATE USER
 CREATE USER joshfermin@localhost IDENTIFIED BY 'password';
@@ -73,6 +78,12 @@ DROP USER joshfermin@localhost;
 
 # 13 - START TRANSACTION and a ROLLBACK
 START TRANSACTION;
+DELETE FROM pizzas_ordered WHERE total_pizza_price < '15.50';
+ROLLBACK;
+
+
+
+
 
 
 
