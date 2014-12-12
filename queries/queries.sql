@@ -46,10 +46,17 @@ HAVING COUNT(orders.order_id) > 2
 
 
 # 7 - SELECT FROM WHERE with two implied JOINS, a MAX function, AVG function
-
+SELECT 
 
 # 8 - SELECT FROM WHERE NOT and IN
-
+# Gives customers that dont pay in cash.
+SELECT customer_name
+FROM `customers`
+WHERE customer_name NOT IN (
+	SELECT customer_name
+	FROM `customers`
+	WHERE payment_method_code = 1
+);
 
 # 9 - SET COMMAND and WHERE (nontrivial)
 
@@ -65,6 +72,7 @@ GRANT ALL ON project.* TO joshfermin@localhost;
 DROP USER joshfermin@localhost;
 
 # 13 - START TRANSACTION and a ROLLBACK
+START TRANSACTION;
 
 
 

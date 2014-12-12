@@ -57,18 +57,20 @@ CREATE TABLE employees
     employee_address_id INT REFERENCES addresses(employee_address_id),
     employee_name VARCHAR(50),
     employee_phone VARCHAR(50),
+    city VARCHAR(20),
+    zip VARCHAR(20),
     PRIMARY KEY (employee_id)
 );
 INSERT INTO employees VALUES
-(1, 1, 'John Doe',      '111-111-1111'),
-(2, 2, 'Cindy Smith',   '111-222-2222'),
-(3, 3, 'Elmer Jones',   '111-333-3333'),
-(4, 4, 'Ralph Watson',  '111-444-4444'),
-(5, 5, 'Sheefali Tewari', '111-555-5555'),
-(6, 6, 'Louis Bouddhou','111-666-6666'),
-(7, 7, 'Josh Fermin',   '111-777-7777'),
-(8, 8, 'Alex Campbell', '111-888-8888'),
-(9, 9, 'Edward Zhu',    '111-999-9999');
+(1, 1, 'John Doe',      '111-111-1111', 'Boulder', 80303),
+(2, 2, 'Cindy Smith',   '111-222-2222', 'Boulder', 80303),
+(3, 3, 'Elmer Jones',   '111-333-3333', 'Boulder', 80303),
+(4, 4, 'Ralph Watson',  '111-444-4444', 'Boulder', 80303),
+(5, 5, 'Sheefali Tewari', '111-555-5555', 'Broomfield', 80020),
+(6, 6, 'Louis Bouddhou','111-666-6666', 'Boulder', 80304),
+(7, 7, 'Josh Fermin',   '111-777-7777', 'Boulder', 80304),
+(8, 8, 'Alex Campbell', '111-888-8888', 'Boulder', 80304),
+(9, 9, 'Edward Zhu',    '111-999-9999', 'Boulder', 80304);
 
 CREATE TABLE vehicles
 (
