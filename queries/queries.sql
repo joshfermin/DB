@@ -18,7 +18,7 @@ WHERE
 	address_cityzip.zip = address_zipstate.zip;
 
 # 5 - SELECT FROM WHERE GROUP BY
-# Groups the orders by customer_id
+# Groups the number of orders by customer_id
 SELECT 
 	COUNT(orders.order_id) AS NumberOFOrders,
 	customers.customer_id,
@@ -78,7 +78,9 @@ DROP USER joshfermin@localhost;
 
 # 13 - START TRANSACTION and a ROLLBACK
 START TRANSACTION;
-DELETE FROM pizzas_ordered WHERE total_pizza_price < '15.50';
+UPDATE pizzas_ordered 
+SET total_pizza_price = '10.00'
+WHERE total_pizza_price < '15.50';
 ROLLBACK;
 
 
