@@ -55,7 +55,7 @@ FROM (SELECT AVG(orders.total_order_price) AS AVG, customers.customer_name AS Cu
 
 
 # 8 - SELECT FROM WHERE NOT and IN
-# Gives customers that dont pay in cash.
+# Gives customers that dont pay in credit.
 SELECT customer_name
 FROM `customers`
 WHERE customer_name NOT IN (
@@ -71,17 +71,20 @@ WHERE total_pizza_price > '16.00'
 
 # 11 - CREATE USER
 CREATE USER joshfermin@localhost IDENTIFIED BY 'password';
-GRANT ALL ON project.* TO joshfermin@localhost;
+GRANT ALL ON pizzahut_normalized.* TO joshfermin@localhost;
 
 # 12 - DROP USER
 DROP USER joshfermin@localhost;
 
 # 13 - START TRANSACTION and a ROLLBACK
-START TRANSACTION;
+START TRANSACTION; # or BEGIN
 UPDATE pizzas_ordered 
 SET total_pizza_price = '10.00'
 WHERE total_pizza_price < '15.50';
+SELECT * FROM pizzas_ordered;
+
 ROLLBACK;
+SELECT * FROM pizzas_ordered
 
 
 

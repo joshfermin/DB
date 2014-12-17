@@ -157,23 +157,23 @@ INSERT INTO orders VALUES
 -- MVD - table's only pk is all 3 attributes.
 CREATE TABLE employee_delivery_type
 (
-	delivered_by_employee_id VARCHAR(50),
+	delivered_by_employee_id INT REFERENCES employees(employee_id),
 	pizza_type VARCHAR(20)
 );
 INSERT INTO employee_delivery_type VALUES
-('Alex Campbell', 'Pepperoni'),
-('Alex Campbell', 'Cheese'),
-('John Doe', 'Pepperoni'),
-('John Doe', 'Supreme');
+(8, 'Pepperoni'),
+(8, 'Cheese'),
+(1, 'Pepperoni'),
+(1, 'Supreme');
 
 CREATE TABLE employee_delivery_area
 (
-	delivered_by_employee_id VARCHAR(50),
+	delivered_by_employee_id INT REFERENCES employees(employee_id),
 	area VARCHAR(20)
 );
 INSERT INTO employee_delivery_area VALUES
-('Alex Campbell', 'Boulder'),
-('John Doe', 'Broomfield');
+(8, 'Boulder'),
+(1, 'Broomfield');
 
 
 CREATE TABLE pizzas_ordered
@@ -187,6 +187,7 @@ INSERT INTO pizzas_ordered VALUES
 (2, '10.95'),
 (3, '18.95'),
 (4, '15.25');
+
 
 CREATE TABLE pizza_details
 (
